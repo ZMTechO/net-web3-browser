@@ -1,50 +1,33 @@
-# LibraBrowser
-A Block Explorer for the Libra Blockchain TestNet. See: https://librabrowser.io
 
-## Features
-* [Account View](https://librabrowser.io/account/e945eec0f64069d4f171d394aa27881fabcbd3bb6bcc893162e60ad3d6c9feec) 
-* [Version View](https://librabrowser.io/version/1), including gas spend and program info as well as information useful to debug the network
-* [A Faucet](https://librabrowser.io/faucet) that sends the funds as p2p transaction
-* [Network Statistics](https://librabrowser.io/stats)
-* RPC based client to read data
-* DB store of transactions
-* Search by account or version
-* Simple Libra client automation (soon to be deprecated)
+Overview of the NIST Blockchain Prototypes
+Stephen Nightingale, NIST Information Technology Laboratory
+May 2017
 
-## Installation
-1. Run: pip3 install grpcio grpcio-tools hexdump Flask Flask-Caching sqlalchemy psycopg2 requests
-2. Have access to a Postgres Database server
+Bitcoin is the first and the iconic instance of a Blockchain application for a cryptocurrency.  It has the original (nakamoto) implementation in C++, and a later implementation in GOlang, available on GitHub (https://github.com/btcsuite/btcd). In full, it is a cryptocurrency with decentralized control of the ledger, and universal access. Anyone can participate as a wallet user,, getting and spending Bitcoins, or by deploying a node, tracking and mining Bitcoins and contributing to the ledger maintenance.
 
-## Database
-* Default config assumes a [postgresql](https://wiki.postgresql.org/wiki/Main_Page) database with:
-    * username = postgres
-    * password = postgres
-    * host = localhost
-    * port = 5432
-    * database name = libra_browser
-    * Please see [SQLAlchemy Docs](https://docs.sqlalchemy.org/en/13/core/engines.html) for configuration options
-* make sure that /etc/postgresql/<PGSQL_VERSION>/main/pg_hba.conf has the configuration of password, i.e. auth method md5 and not peer:
-> local   all             postgres                                md5
-* To create the DB after installing postgresql you can run: sudo -u postgres createdb libra_browser
+Bitcoin introduced a new data structure, the blockchain, as a secure public means of storing and transferring currency, and other information. It employs cryptographic concepts and tools such as public/private key pairs, and hashes (and hashes of hashes).  Since the implementation employs complex layers of dereferencing, it is difficult code to read, understand and modify.  The object of this project, then, is to develop cryptocurrency models from the simplest, to the progressively more complex, while introducing concepts using in the development of Bitcoin.
 
-## Running the project
-At the root project folder execute the command:
-> python3 Browser.py
+We hope that this will offer the curious a path to understanding Bitcoin, and code to use to develop alternative concepts.  It is offered as a tool for modelling Blockchain development and exploration.
 
-Or to execute and leave it to run with output redirected to a file execute:
-> nohup python3 Browser.py &> browser.log < /dev/null &  
-> tail -f browser.log     #if you want to see the logs
+All the early models in this repository are centralized. A summary of the existing models is:
 
-To use "DEVELOPMENT" mode settings set the environment variable "BROWSER=DEVELOPMENT" 
+Model 0:  introduces immutable coins, identified by transaction ID, with ownership identified by hash. The ledger is a linear list. The outputs are signed by the sender to indicate transfer of ownership. README0.txt inside this folder explains how the original model works.
 
-## Contributing
-[Please see Contributing.md](https://github.com/Disk1n/LibraBrowser/blob/master/CONTRIBUTING.md)
+Model 1: introduces transactions that aggregate value in one, or few, coins, where the sender pays the receiver and gives 'change' back to himself.  README1.txt inside this folder explains how the first upgrade works.
 
-## Credits
-rpc support is based on: https://github.com/egorsmkv/libra-grpc-py  
-Contributors: 
-- [@jmohan57](https://github.com/jmohan57) 
-- [@lucasverra](https://github.com/lucasverra) 
-- [@changwu-tw](https://github.com/changwu-tw)
-- Daniel Prinz ([First Group](https://firstdag.com))
+Model 2: extends the ledger to include blocks which are backchained by hash pointers, with each block containing a Merkle Tree having 2**N transactions. README2.txt inside this folder explains how the second upgrade works.
 
+Forthcoming models not yet installed here:
+
+Model 3: introduces payment by Scripts, where the new owner of a coin value stipulates the procedure by which it can be redeemed.
+
+
+Install, Compile, Explore:
+-------------------------
+
+The project is developed using Golang version 1.6.  Once you have that installed, with your $GOPATH set, everything can be compiled using:
+$ python gobuilder.py
+
+Individual Golang module functions are illuminated by:
+
+$ python helpers.py unblock.go (or genesis.go, or ...)
