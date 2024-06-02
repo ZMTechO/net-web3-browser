@@ -43,7 +43,7 @@ To use "DEVELOPMENT" mode settings set the environment variable "BROWSER=DEVELOP
 ## Credits
 rpc support is based on: https://github.com/egorsmkv/libra-grpc-py  
 Contributors: 
-- [@gdbaldw](https://github.com/gdbaldw) 
+- [@jmohan57](https://github.com/jmohan57) 
 - [@lucasverra](https://github.com/lucasverra) 
 - [@changwu-tw](https://github.com/changwu-tw)
 - Daniel Prinz ([First Group](https://firstdag.com))
